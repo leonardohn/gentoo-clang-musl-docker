@@ -54,6 +54,7 @@ RUN git clone --depth=1 https://github.com/leonardohn/gentoo-patchset.git /etc/p
 
 # At this moment, patch used by iptables is no more necessary.
 # Rebuild everything with Clang/LLVM toolchain.
+# NOTE: If dev-vcs/git fail to build, add "--exclude 'dev-vcs/git'" option after [...] -e @world.
 RUN rm -rf /etc/portage/patches/net-firewall \
 && MAKEOPTS="-j$(nproc --all)" emerge -j$(nproc --all) -l$(nproc --all) --quiet-build=y --quiet=y --verbose=n -e @world
 
