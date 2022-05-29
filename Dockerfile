@@ -22,7 +22,7 @@ COPY ./files/repos2.conf ./gentoo.conf
 
 # Updating gentoo tree with rsync, install eselect-repository and git, switch to git repository and update sys-apps/portage.
 RUN emerge-webrsync \
-&& MAKEOPTS="-j$(nproc --all)" emerge -j4 -l4 --quiet=y --quiet-build=n --verbose=n app-eselect/eselect-repository dev-vcs/git \
+&& emerge app-eselect/eselect-repository dev-vcs/git \
 && eselect repository enable musl \
 && eselect repository add clang-musl git https://github.com/clang-musl-overlay/clang-musl-overlay.git \
 && rm -rf /var/db/repos/gentoo \
@@ -56,7 +56,7 @@ RUN git clone --depth=1 https://github.com/leonardohn/gentoo-patchset.git /etc/p
 # Rebuild everything with Clang/LLVM toolchain.
 # NOTE: If dev-vcs/git fail to build, add "--exclude 'dev-vcs/git'" option after [...] -e @world.
 RUN rm -rf /etc/portage/patches/net-firewall \
-&& MAKEOPTS="-j$(nproc --all)" emerge -j$(nproc --all) -l$(nproc --all) --quiet-build=y --quiet=y --verbose=n -e @world
+&& emerge -e @world
 
 # Create a full backup tar to utilize on next stage build.
 COPY ./files/mkstage.sh /mkstage.sh
@@ -77,11 +77,11 @@ COPY ./files/repos2.conf /gentoo.conf
 # Update tree, switch rsync to git repository, install Catalyst build tool and clone necessary repositories
 # to build a stage3 gentoo.
 RUN emerge-webrsync \
-&& emerge --quiet-build=y --quiet=y dev-vcs/git app-eselect/eselect-repository \
+&& emerge dev-vcs/git app-eselect/eselect-repository \
 && mv /gentoo.conf /etc/portage/repos.conf/gentoo.conf \
 && rm -rf /var/db/repos/gentoo \
-&& emerge --sync --quiet \
-&& USE="-iso" emerge --quiet-build=y --quiet=y dev-util/catalyst app-arch/pixz \
+&& emerge --sync \
+&& USE="-iso" emerge dev-util/catalyst app-arch/pixz \
 && rm -rf /var/cache/binpkgs/* \
 && rm -rf /var/cache/distfiles/* \
 && rm -rf /var/tmp/portage/* \
