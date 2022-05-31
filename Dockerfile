@@ -56,4 +56,3 @@ RUN rm -rf \
     /var/tmp/portage/* \
  && echo -e "\nACCEPT_KEYWORDS=\"${ACCEPT_KEYWORDS}\"\n" \
     >> /etc/portage/make.conf
-
