@@ -9,13 +9,16 @@ This is a experiment project envolving Docker to build and automate custom stage
 
 ### Building
 
-Install Docker in your machine, and run `docker build -t <insertyourtag> .` Take a little time to build, so sit back, take a coffee and relax. 
+Install Docker in your machine, and run `docker build -t <insertyourtag> .` Take a little time to build, so sit back, take a coffee and relax. After ending, run `docker export -o stage.tar <insertyouprevioustag>`, and your fresh stage3-clang-musl-gentoo are done.
+
+You can follow Gentoo Handbook documentation to continue your new installation:
+`https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage`
 
 Errors are expected. Consider opening a bug report to help this project.
 
 ### Common issues
 
-With no one reason, dev-vcs/git build fails, and error log doesn't make any sense. If you get same error, try adding `--exclude 'dev-vcs/git'` option at the end of rebuild system step.
+`dev-vcs/git` build fails, and error log doesn't make any sense. An option `--exclude 'dev-vcs/git'` was added at the end of rebuild system step.
 
 ### Notes
 
